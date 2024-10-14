@@ -19,10 +19,19 @@ git clone https://github.com/ahmedbm27/webnorth-back
 cd webnorth-back
 ```
 
+### Add the fowolling data to the .env file:
+
+```bash
+APP_METAFIELD_NAME_SPACE=cart_rule
+APP_METAFIELD_KEY=app-configuration
+```
+
 ### Start a local development server:
 ```bash
 npm install
 ```
+
 ```bash
 npm run dev
 ```
+

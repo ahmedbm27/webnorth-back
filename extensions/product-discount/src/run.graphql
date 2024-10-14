@@ -1,0 +1,21 @@
+query RunInput {
+  cart {
+    lines {
+      id
+      quantity
+      merchandise {
+        __typename
+        ...on ProductVariant {
+          sku
+          title
+          id
+        }
+      }
+    }
+  },
+  shop {
+    metafield(namespace:"cart_rule", key:"app-configuration"){
+      jsonValue
+    }
+  }
+}

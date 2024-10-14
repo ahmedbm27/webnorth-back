@@ -1,6 +1,6 @@
 import {json, type LoaderFunctionArgs } from "@remix-run/node";
 import shopify from "../shopify.server";
-import { Button, Card, IndexTable,List,Page,Text, useBreakpoints } from "@shopify/polaris";
+import { BlockStack, Button, Card, IndexTable,List,Page,Text, useBreakpoints } from "@shopify/polaris";
 import { Link, useLoaderData,useNavigate } from "@remix-run/react";
 import type { AdminApiContext } from "@shopify/shopify-app-remix/server";
 
@@ -44,13 +44,19 @@ export default function Index() {
   
   const { cartRules } = useLoaderData<typeof loader>();
 
-  const data = cartRules[0].jsonValue.data as {uuid: string, status: boolean,matchingProducts: (string | null)[], freeGifts: (string | null)[]}[]
-  if(!cartRules.length) return ((<Card>
-    <Text as="h2" variant="bodyMd">
-      Create a new cart rule
-    </Text>
-    <Button onClick={()=>navigate(`./new-cart-rule/`)}>Createee</Button>
-  </Card>));
+  const data = cartRules[0]?.jsonValue?.data as {uuid: string, status: boolean,matchingProducts: (string | null)[], freeGifts: (string | null)[]}[]
+  if(!cartRules.length) return ((
+  <Page>
+    <Card>
+      <BlockStack gap="500">
+        <Text as="h2" variant="bodyMd">
+          Create a new cart rule
+        </Text>
+        <Button onClick={()=>navigate(`./new-cart-rule/`)}>Create</Button>
+      </BlockStack>
+    </Card>
+  </Page>
+  ));
   
  return(
   <Page

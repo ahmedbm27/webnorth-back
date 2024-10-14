@@ -11,7 +11,6 @@ import {
   Page,
 } from "@shopify/polaris";
 import {
-  useActionData,
   useFetcher,
   useNavigate,
 } from "@remix-run/react";
@@ -29,10 +28,9 @@ import { getShopInfo } from "./query/get-shop-info";
 
 
 export const action = async ({ params, request }: ActionFunctionArgs) => {
-  const { admin, redirect } = await shopify.authenticate.admin(request);
+  const { admin } = await shopify.authenticate.admin(request);
   const formData:FormData = await request.formData();
   const {cartRules,shopId} = await getShopInfo(admin).then(resp => resp.json())
-  console.log(cartRules);
   const cartRule = formData.get('cartRule');
   if (!cartRule) {
     return json({ message: 'cartRule required param' }, { status: 400 });
@@ -127,9 +125,6 @@ export default function NewCartRule(props: unknown){
     freeGifts:[null],
   });
 
-  console.log({props})
-  const daxxta = useActionData<typeof action>();
-  console.log(daxxta)
   const { submit } = useForm({
     fields:{
       matchingProducts: [],
@@ -143,9 +138,7 @@ export default function NewCartRule(props: unknown){
 
   const navigate = useNavigate();
   useEffect(() => {
-    console.log(fetcher.state)
-    console.log(fetcher.data)
-    console.log(fetcher)
+
     const data = fetcher.data as { ok : false, message: string} | {ok: true} | null
     if (!data) {
       return
@@ -178,10 +171,8 @@ export default function NewCartRule(props: unknown){
         productAlt: images[0]?.altText,
         productImage: images[0]?.originalSrc,
       }
-      console.log({cartRulexx: cartRule, productType, index})
       setCartRule(JSON.parse(JSON.stringify(cartRule)));
     }
-    console.log({cartRule});
     
   }
 

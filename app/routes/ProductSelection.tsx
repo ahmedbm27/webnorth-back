@@ -20,7 +20,7 @@ const  ProductSelection = ({ productType , productData, onSelectProduct, title, 
   <BlockStack gap="500">
     <InlineStack align="space-between">
       <Text as="h2" variant="headingLg">
-        {title} {JSON.stringify(productData)}
+        {title}
       </Text>
       {productData?.productId && (
         <Button variant="plain" onClick={() => onSelectProduct(productType, index)}>
